@@ -34,6 +34,14 @@ These nodes must be started when your simulated Husky is in the center of the Ga
 This repo contains the mobility planner, which you'll need to modify to run the grasp service from the manipulation.
 Start this node last, and see the robot move to the various locations in the locations.csv file.
 
+## Start the EKF localization node:
+
+```xml
+  <!-- Start EKF for localization -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+    <rosparam command="load" file="$(find husky_control)/config/localization.yaml" />
+  </node>
+```
 
 ## Stretch Goal
 
