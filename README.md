@@ -1,4 +1,6 @@
-# mobility-plus-manipulation
+# Mobility Plus Manipulation
+
+_Mobility plus manipulation_ describes a mobile robot that alternates between navigating through its environment and manipulating objects. It is not to be confused with _mobile manipulation_ where navigation and manipulation are performed concurrently.
 
 ## Goal
 
