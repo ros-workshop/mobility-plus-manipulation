@@ -1,0 +1,659 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:property name="dist_joint_offset" value="0.75" />
+<xacro:property name="dist_joint_multiplier" value="0.3" />
+<xacro:property name="finger_stop_kd"             value="1.0" />
+<xacro:property name="finger_stop_kp"             value="10000000.0" />
+<xacro:property name="finger_fudge_factor"        value="1.0" />
+
+<xacro:property name="finger_kp"                  value="0.0" />
+<xacro:property name="finger_kd"                  value="0.0" />
+<xacro:property name="finger_fm"                  value="0.0" />
+
+<xacro:property name="finger_tip_kp"              value="0.0" />
+<xacro:property name="finger_tip_kd"              value="0.0" />
+<xacro:property name="finger_tip_fm"              value="0.0" />
+
+<xacro:property name="finger_tip_mu"              value="1500.0" />
+<xacro:property name="finger_mu"                  value="1500.0" />
+<xacro:property name="dist_joint_multiplier" value="0.3" />
+
+   <link name="barrett_base_link">
+    <inertial>
+      <mass value="0.1" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://barrett_hand/meshes/base_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://barrett_hand/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="palm_joint" type="fixed"> <!--original is revolute-->
+    <origin xyz="0.0 0.0 0.077"/>
+    <parent link="barrett_base_link" />
+    <child link="palm_frame" />
+  </joint>
+
+  <link name="palm_frame">
+  </link>
+
+  <link name="finger_1_prox_link">
+    <inertial>
+      <mass value="0.1" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_1_prox_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_1_prox_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="finger_1_prox_joint" type="revolute">
+    <origin xyz="0.025 0 0.0415" rpy="0 2.7051E-17 -1.5708" />
+    <parent link="barrett_base_link" />
+    <child link="finger_1_prox_link" />
+    <axis xyz="0 0 -1" />
+    <limit lower="0.0" upper="3.141" effort="10000" velocity="0.2" />
+   <dynamics damping="10.0" friction="10.0" />
+  </joint>
+  <link
+    name="finger_1_med_link">
+    <inertial>
+      <mass value="0.1" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="3.14159265359 0 0" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_1_med_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="3.14159265359 0 0" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_1_med_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="finger_1_med_joint"
+    type="revolute">
+    <origin xyz="-0.05 0 0.0339" rpy="-1.5708 -8.8281E-17 0" />
+    <parent link="finger_1_prox_link" />
+    <child link="finger_1_med_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="2.44" effort="10000" velocity="0.2" />
+   <dynamics damping="10.0" friction="10.0" />
+  </joint>
+  <link
+    name="finger_1_dist_link">
+    <inertial>
+      <mass value="0.001" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-1" ixy="0" ixz="0" iyy="1e-1" iyz="0" izz="1e-1" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="3.14159265359 0 -0.73" />
+      <geometry>
+        <mesh filename="package://barrett_hand/meshes/finger_1_dist_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="3.14159265359 0 -0.73" />
+      <geometry>
+        <mesh filename="package://barrett_hand/meshes/finger_1_dist_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="finger_1_dist_joint" type="revolute"> <!--original is revolute-->
+    <origin xyz="-0.069936 -0.003 0" rpy="1.6787E-18 -3.6382E-15 -6.1073E-33" />
+    <parent link="finger_1_med_link" />
+    <child link="finger_1_dist_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="0.6" upper="1.57" effort="10000" velocity="0.2" />
+   <dynamics damping="10.0" friction="10.0" />
+   <mimic joint="finger_1_med_joint" multiplier="${dist_joint_multiplier}" offset="${dist_joint_offset}"/>
+  </joint>
+  <link
+    name="finger_2_prox_link">
+    <inertial>
+      <mass value="0.1" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://barrett_hand/meshes/finger_2_prox_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://barrett_hand/meshes/finger_2_prox_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="finger_2_prox_joint" type="revolute">
+    <origin xyz="-0.025 0 0.0415" rpy="0 2.7051E-17 -1.5708" />
+    <parent link="barrett_base_link" />
+    <child link="finger_2_prox_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="3.141" effort="10000"  velocity="0.2" />
+   <dynamics damping="10.0" friction="10.0" />
+  </joint>
+  <link
+    name="finger_2_med_link">
+    <inertial>
+      <mass value="0.1" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="3.14159265359 0 0" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_2_med_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="3.14159265359 0 0" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_2_med_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="finger_2_med_joint"
+    type="revolute">
+    <origin xyz="-0.05 0 0.0339" rpy="-1.5708 -8.8281E-17 0" />
+    <parent link="finger_2_prox_link" />
+    <child link="finger_2_med_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="0.0" upper="2.44" effort="10000" velocity="0.2" />
+   <dynamics damping="10.0" friction="10.0" />
+  </joint>
+  <link
+    name="finger_2_dist_link">
+    <inertial>
+      <mass value="0.001" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-1" ixy="0" ixz="0" iyy="1e-1" iyz="0" izz="1e-1" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="3.14159265359 0 -0.73" />
+      <geometry>
+        <mesh filename="package://barrett_hand/meshes/finger_2_dist_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="3.14159265359 0 -0.73" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_2_dist_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="finger_2_dist_joint"
+    type="revolute"> <!--original is revolute-->
+    <origin
+      xyz="-0.069917 -0.0034087 0"
+      rpy="-3.1382E-17 -2.3229E-16 0" />
+    <parent
+      link="finger_2_med_link" />
+    <child
+      link="finger_2_dist_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0.6"
+      upper="1.57"
+      effort="10000"
+      velocity="0.2" />
+   <dynamics damping="10.0" friction="10.0" />
+   <mimic joint="finger_2_med_joint" multiplier="${dist_joint_multiplier}" offset="${dist_joint_offset}"/>
+  </joint>
+  <link
+    name="finger_3_med_link">
+    <inertial>
+      <mass value="0.1" />
+      <origin xyz="-0.05 0 0" rpy="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="3.14159265359 0 0" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_3_med_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="3.14159265359 0 0" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_3_med_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="finger_3_med_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.05 0.0754"
+      rpy="-1.5708 6.123E-17 1.5708" />
+    <parent
+      link="barrett_base_link" />
+    <child
+      link="finger_3_med_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0.0"
+      upper="2.44"
+      effort="10000"
+      velocity="0.2" />
+   <dynamics damping="10.0" friction="10.0" />
+  </joint>
+  <link
+    name="finger_3_dist_link">
+    <inertial>
+      <mass value="0.1" />
+      <origin xyz="-0.04 0 0" rpy="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="3.14159265359 0 -0.73" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_3_dist_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="3.14159265359 0 -0.73" />
+      <geometry>
+        <mesh
+          filename="package://barrett_hand/meshes/finger_3_dist_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="finger_3_dist_joint"
+    type="revolute"> <!--original is revolute-->
+    <origin
+      xyz="-0.069936 -0.003 0"
+      rpy="6.0427E-17 -6.7283E-18 -4.0657E-34" />
+    <parent
+      link="finger_3_med_link" />
+    <child
+      link="finger_3_dist_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0.6"
+      upper="1.57"
+      effort="10000"
+      velocity="0.2" />
+   <dynamics damping="10.0" friction="10.0" />
+   <mimic joint="finger_3_med_joint" multiplier="${dist_joint_multiplier}" offset="${dist_joint_offset}"/>
+  </joint>
+
+  <transmission name="tran11">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="finger_1_med_joint">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor11">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran12">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="finger_1_dist_joint">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor12">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran13">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="finger_2_med_joint">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor13">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran14">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="finger_2_dist_joint">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor14">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>10</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran15">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="finger_3_med_joint">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor15">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran16">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="finger_3_dist_joint">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor16">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran17">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="finger_1_prox_joint">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>    
+    <actuator name="motor17">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran18">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="finger_2_prox_joint">
+        <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor18">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  
+   <!-- base_link -->
+  <gazebo reference="barrett_base_link">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+
+
+  <!-- finger_1_prox_link -->
+  <gazebo reference="finger_1_prox_link">
+    <material>Gazebo/Grey</material>
+     <turnGravityOff>true</turnGravityOff>
+      <mu1 value="${finger_mu}" />
+      <mu2 value="${finger_mu}" />
+      <kp value="1000000.0" />
+      <kd value="1.0" />
+  </gazebo>
+    <gazebo reference="finger_1_prox_joint">
+      <stopKd value="${finger_stop_kd}" />
+      <stopKp value="${finger_stop_kp}" />
+      <fudgeFactor value="${finger_fudge_factor}" />
+      <provideFeedback value="true"/>
+    </gazebo>
+
+
+  <!-- finger_1_med_link -->
+  <gazebo reference="finger_1_med_link">
+     <turnGravityOff>true</turnGravityOff>
+      <mu1 value="${finger_mu}" />
+      <mu2 value="${finger_mu}" />
+      <kp value="1000000.0" />
+      <kd value="1.0" />
+    <material>Gazebo/Black</material>
+  </gazebo>
+    <gazebo reference="finger_1_med_joint">
+      <stopKd value="${finger_stop_kd}" />
+      <stopKp value="${finger_stop_kp}" />
+      <fudgeFactor value="${finger_fudge_factor}" />
+      <provideFeedback value="true"/>
+    </gazebo>
+
+  <!-- finger_1_dist_link -->
+  <gazebo reference="finger_1_dist_link">
+     <turnGravityOff>true</turnGravityOff>
+     <implicitSpringDamper>1</implicitSpringDamper>
+      <mu1 value="${finger_tip_mu}" />
+      <mu2 value="${finger_tip_mu}" />
+      <kp value="1000000.0" />
+      <kd value="1.0" />
+    <material>Gazebo/Grey</material>
+  </gazebo>
+    <gazebo reference="finger_1_dist_joint">
+      <stopKd value="${finger_stop_kd}" />
+      <stopKp value="${finger_stop_kp}" />
+      <fudgeFactor value="${finger_fudge_factor}" />
+      <provideFeedback value="true"/>
+    </gazebo>
+
+  <!-- finger_2_prox_link -->
+  <gazebo reference="finger_2_prox_link">
+     <turnGravityOff>true</turnGravityOff>
+      <mu1 value="${finger_mu}" />
+      <mu2 value="${finger_mu}" />
+      <kp value="1000000.0" />
+      <kd value="1.0" />
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+
+  <!-- finger_2_med_link -->
+  <gazebo reference="finger_2_med_link">
+     <turnGravityOff>true</turnGravityOff>
+      <mu1 value="${finger_mu}" />
+      <mu2 value="${finger_mu}" />
+      <kp value="1000000.0" />
+      <kd value="1.0" />
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <!-- finger_2_dist_link -->
+  <gazebo reference="finger_2_dist_link">
+  <implicitSpringDamper>1</implicitSpringDamper>
+     <turnGravityOff>true</turnGravityOff>
+      <mu1 value="${finger_tip_mu}" />
+      <mu2 value="${finger_tip_mu}" />
+      <kp value="1000000.0" />
+      <kd value="1.0" />
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <!-- finger_3_med_link -->
+  <gazebo reference="finger_3_med_link">
+     <turnGravityOff>true</turnGravityOff>
+      <mu1 value="${finger_mu}" />
+      <mu2 value="${finger_mu}" />
+      <kp value="1000000.0" />
+      <kd value="1.0" />
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <!-- finger_3_dist_link -->
+  <gazebo reference="finger_3_dist_link">
+  <implicitSpringDamper>1</implicitSpringDamper>
+     <turnGravityOff>true</turnGravityOff>
+      <mu1 value="${finger_tip_mu}" />
+      <mu2 value="${finger_tip_mu}" />
+      <kp value="1000000.0" />
+      <kd value="1.0" />
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+    <gazebo>
+      <plugin name="p3d_barrett_gripper_palm_controller" filename="libgazebo_ros_p3d.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>100.0</updateRate>
+        <bodyName>barrett_base_link</bodyName>
+        <topicName>barrett_palm_pose_ground_truth</topicName>
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+        <gaussianNoise>0.0</gaussianNoise>
+        <frameName>world</frameName>
+      </plugin>
+
+      <!-- a formal implementation of grasp hack in gazebo with fixed joint -->
+      <gripper name="barrett_hand">
+        <grasp_check>
+          <attach_steps>1</attach_steps>
+          <detach_steps>20</detach_steps>
+          <min_contact_count>1</min_contact_count>
+        </grasp_check>
+        <gripper_link>finger_3_dist_link</gripper_link>
+        <!--gripper_link>finger_1_prox_link</gripper_link>
+        <gripper_link>finger_2_prox_link</gripper_link>
+        <gripper_link>finger_1_dist_link</gripper_link>
+        <gripper_link>finger_2_dist_link</gripper_link>
+        <gripper_link>finger_1_med_link</gripper_link>
+        <gripper_link>finger_2_med_link</gripper_link>
+        <gripper_link>finger_3_med_link</gripper_link>
+        <palm_link>barrett_base_link</palm_link-->
+        <contact_topic>__default_topic__</contact_topic>
+      </gripper>
+
+    </gazebo>
+
+
+  <gazebo>
+    	<plugin name="mimic_plugin" filename="libgazebo_mimic_plugin.so">
+            <joint>finger_1_med_joint</joint>
+            <mimicJoint>finger_1_dist_joint</mimicJoint>
+            <multiplier>1.0</multiplier>
+        </plugin>
+  </gazebo>
+  <gazebo>
+    	<plugin name="mimic_plugin" filename="libgazebo_mimic_plugin.so">
+            <joint>finger_2_med_joint</joint>
+            <mimicJoint>finger_2_dist_joint</mimicJoint>
+            <multiplier>1.0</multiplier>
+        </plugin>
+  </gazebo>
+  <gazebo>
+    	<plugin name="mimic_plugin" filename="libgazebo_mimic_plugin.so">
+            <joint>finger_3_med_joint</joint>
+            <mimicJoint>finger_3_dist_joint</mimicJoint>
+            <multiplier>1.0</multiplier>
+        </plugin>
+  </gazebo>
+  
+  <!--<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>-->
+
+  <gazebo>
+    <plugin name="gazebo_ros_joint_trajectory" filename="libgazebo_ros_joint_pose_trajectory.so">
+      <robotNamespace>/</robotNamespace>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+    </plugin>
+  </gazebo>
+  
+      
+</robot>
+  
+  

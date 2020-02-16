@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<robot name="husky_abb" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  
+  <xacro:include filename="$(find husky_abb_description)/urdf/abb_macro2.xacro"/>
+  <xacro:include filename="$(find husky_description)/urdf/husky.urdf.xacro"/>
+  <xacro:include filename="$(find barrett_hand)/urdf/barrett.xacro"/>
+  <xacro:include filename="$(find husky_abb_description)/urdf/kinect.xacro"/>
+  <!-- Fix robot to Gazebo world
+  
+  <link name="world"/>-->
+
+  <joint name="husky_abb" type="fixed">
+  	<origin xyz="0.3 0 0.253" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="abb2_base_link"/>
+  </joint> 
+
+    <xacro:abb2 prefix="abb2_"/>
+  <joint name="abb_barrett_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0.0025 0 0" rpy="1.57 0 1.57"/>
+    <parent link="abb2_link_6"/>
+    <child link="barrett_base_link"/>
+  </joint> 
+
+  
+  
+ </robot>

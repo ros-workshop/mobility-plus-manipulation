@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <env name="GAZEBO_MODEL_PATH" value="$(find apriltags_gazebo)/models/"/>
+  <arg name="sim" default="true"/>
+  <include file="$(find husky_abb_gazebo)/launch/husky_abb_spawn.launch"> </include>
+  <include file="$(find apriltags_gazebo)/launch/apriltag_spawn.launch"> </include>
+  
+  <include file="$(find apriltag_ros)/launch/continuous_detection.launch"> 
+    <arg name="camera_name" value="/camera"/>
+    <arg name="image_topic" value="/rgb/image_raw"/>
+    <arg name="camera_frame" value="camera_frame_optical"/>
+  </include>
+
+  <!--<node name="spawn_april_cubes" pkg="mobility" type="spawn_april_cubes.py"/>-->
+</launch>

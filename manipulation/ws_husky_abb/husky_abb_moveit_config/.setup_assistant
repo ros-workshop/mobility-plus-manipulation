@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: husky_abb_description
+    relative_path: urdf/husky_abb.urdf.xacro
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/husky_abb.srdf
+  CONFIG:
+    author_name: thibautl
+    author_email: thibault@moveit.com
+    generated_timestamp: 1551515620

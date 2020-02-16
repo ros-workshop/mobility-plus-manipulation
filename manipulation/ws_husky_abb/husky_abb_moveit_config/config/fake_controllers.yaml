@@ -1,0 +1,16 @@
+controller_list:
+  - name: fake_abb_arm_controller
+    joints:
+      - abb2_joint_1
+      - abb2_joint_2
+      - abb2_joint_3
+      - abb2_joint_4
+      - abb2_joint_5
+      - abb2_joint_6
+  - name: fake_barrett_hand_controller
+    joints:
+      - finger_1_prox_joint
+      - finger_1_med_joint
+      - finger_2_prox_joint
+      - finger_2_med_joint
+      - finger_3_med_joint
