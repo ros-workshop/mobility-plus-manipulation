@@ -6,42 +6,78 @@ In this session, you'll make use of the navigation and manipulation modules you 
 this week to perform a task: Navigating to a set of waypoints where your robot would find
 an object of interest to collect.
 
+## Prerequisits
+In order to implement the mobile manipulation functionality. you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order. Don't worry if you didn't get a final outcome for manipulation.
+
 ## Task Description
 
-You'll be using the Husky with ABB arm mounted on it from the 
-[manipulation topic](https://github.com/ros-workshop/manipulation) yesterday, that will navigate to known waypoints and
-perform the task of:
- 
-* Picking up a cube-object with AprilTag attached on its sides, and
-* Dropping the cube-object on the robot's back.  
+You'll be using the Husky with ABB arm mounted on it in order to achieve mobile manipulation. You have two tasks:
+
++ Create Launch files for running everything required.
++ modify this [script](./mobility-plus-manipulation/scripts/planner.py) to execute the mobile manipulaiton task.
+
+
 
 ## How this all comes together
 
 ### Manipulation
 
-Pull down the latest solution branch for manipulation. This will have a new robot with a Hokuyo LiDAR for slam navigation
-and mapping. The Grasp is now a ROS Service, you can run it after starting with a ros service command.
+This session uses different simulated hardware from yesterday. Instead of the UR5, we will be using an ABB IRB120 arm mounted on a husky robot. 
+
+You will not need any of the manipulation functionilty as it is already implemented for you [here](././manipulation/ws_husky_abb_manipulation/husky_abb_manipulation/src/husky_abb_grab_object.cpp). You are more than welcome to change that functionality if you want. However, you will need the dependencies installed in for that repo.
 
 ### Spawn Additional Cubes
 
+Find the file that will spawn multiple stands and apriltags
+
 ### Initialise gmapping and move_base
 
-This is following the week 2 day 2 tutorial https://github.com/ros-workshop/slam-navigation
-These nodes must be started when your simulated Husky is in the center of the Gazebo simulation
+This is following the week 2 day 2 tutorial https://github.com/ros-workshop/slam-navigation.
 
-### Pull down this repo
+Will be using amcl this time:
 
-This repo contains the mobility planner, which you'll need to modify to run the grasp service from the manipulation.
-Start this node last, and see the robot move to the various locations in the locations.csv file.
+`roslaunch mobility-plus-manipulation move_base_map_server_amcl.launch`
 
-## Start the EKF localization node:
+### Begin implementing the functionality
 
-```xml
-  <!-- Start EKF for localization -->
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
-    <rosparam command="load" file="$(find husky_control)/config/localization.yaml" />
-  </node>
+**Action**
+
+Create a launch file with the following and launch it
+
 ```
+roslaunch mobility-plus-manipulation husky_abb.launch
+
+roslaunch mobility-plus-manipulation move_base_map_server_amcl.launch
+
+roslaunch husky_abb_moveit_config moveit_planning_execution_gazebo.launch
+
+```
+You should see something like this:
+
+![Alt Text](./resources/images/husky_tag.png)
+
+**Action**
+
+Create another launch file with the following
+
+```
+
+ <node name="planner" pkg="mobility-plus-manipulation" type="planner.py" output="screen" />
+ <node name="transform_tag_location" pkg="husky_abb_manipulation" type="transform_tag_location"/>
+ <node name="husky_abb_grab_object" pkg="husky_abb_manipulation" type="husky_abb_grab_object" output="screen"/>
+```
+and a parameter call `move_before_grasp` set to `false`.
+
+
+**Modify the planner**
+
+Action, modify the planner.py script to obtain the desired functionality. 
+Optionally, set `move_before_grasp` to `true` and see what ot does.
+
+Launch the file.
+
+**Know issues**
+The physics in gazebo might break down after picking up one or two cubes
 
 ## Stretch Goal
 

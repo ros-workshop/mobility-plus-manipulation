@@ -126,7 +126,6 @@ void GraspTag::AttachGripper()
 {
 	_attach_srv.request.model_name_2 = "apriltag_" + std::to_string(tag_number);
 	attach_tag_client.call(_attach_srv);
-	
 }
 
 void GraspTag::DetachGripper()
@@ -160,7 +159,7 @@ public:
 		ROS_INFO("STARTED DRIVING FORWARDS");
 		geometry_msgs::Pose cube_position = get_pose.getTarget();
 		ros::Rate rate(10);
-		
+
 		stop_husky();
 		ros::Time now = ros::Time::now();
 		ros::Time then = ros::Time::now();
@@ -232,6 +231,13 @@ int main(int argc, char **argv)
 	ros::NodeHandle n;
 	geometry_msgs::Pose temp_pose; //temporary pose to check when the same target is receive
 	GraspTag grasObj;			   // instance of the class GraspTag
+ 
+	bool move_before_grasp;
+	if (!(n.getParam("/move_before_grasp", move_before_grasp)))
+	{
+		ROS_ERROR("param 'move_before_grasp' not found");
+		ros::shutdown();
+	}
 
 	moveit::planning_interface::MoveGroupInterface::Plan my_plan; // plan containing the trajectory
 	static const std::string PLANNING_GROUP = "abb_arm";		  // planning group
@@ -269,12 +275,13 @@ int main(int argc, char **argv)
 	moveit::planning_interface::MoveItErrorCode success;
 
 	sleep(4.0);
-
 	command_vel HUSKY;
+	if (move_before_grasp){
+	
 	HUSKY.start_publisher();
-
+	}
 	ros::ServiceServer service = n.advertiseService("grasp", &GraspTag::serviceCallback, &grasObj); // creating the server called grasp
-
+	ROS_INFO("READY");
 	while (ros::ok) // keep on running until stoped
 	{
 		grasObj.DontExecuteGrasp();
@@ -287,6 +294,7 @@ int main(int argc, char **argv)
 			//wait
 			loop_rate.sleep();
 		}
+		if (move_before_grasp)
 		HUSKY.drive_forwards();
 		sleep(5.0);
 		ROS_INFO("Grasp server active");
@@ -315,7 +323,7 @@ int main(int argc, char **argv)
 		temp_pose.position.z -= 0.08; // move down towards the cube
 		arm.setPoseTarget(temp_pose, arm.getEndEffectorLink().c_str());
 
-		success =arm.plan(my_plan); // check if plan succeded
+		success = arm.plan(my_plan); // check if plan succeded
 
 		arm.move();
 		sleep(1.0);
@@ -352,9 +360,8 @@ int main(int argc, char **argv)
 
 			sleep(7.0);
 			ROS_INFO("Detaching Object");
-			
 		}
-		grasObj.DetachGripper(); // Detaching object
+		grasObj.DetachGripper();						   // Detaching object
 		hand.setJointValueTarget("finger_2_med_joint", 0); //closing hand
 		hand.setJointValueTarget("finger_1_med_joint", 0);
 		hand.setJointValueTarget("finger_3_med_joint", 0);
@@ -368,7 +375,7 @@ int main(int argc, char **argv)
 		arm.move();
 
 		ROS_INFO("finished motion plan");
-
+		if (move_before_grasp)
 		HUSKY.drive_backwards();
 		sleep(3.0);
 

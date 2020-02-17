@@ -77,6 +77,7 @@ class MoveBaseSquare():
             goal.target_pose.pose = waypoints[i]
             
             # Start the robot moving toward the goal
+            rospy.wait_for_service('grasp')
             succeeded = self.move(goal)
             if succeeded :
                 self.grab()
@@ -152,7 +153,6 @@ class MoveBaseSquare():
 if __name__ == '__main__':
     try:
         print("waiting for husky_abb_grab_object.cpp to run")
-        rospy.wait_for_service('grasp')
         rospack = rospkg.RosPack()
         path = rospack.get_path('mobility-plus-manipulation')+'/husky_poses.csv'
         print("Searching for locations in: " + path)
