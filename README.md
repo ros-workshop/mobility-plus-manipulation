@@ -67,14 +67,15 @@ Create another launch file with the following
  <node name="husky_abb_grab_object" pkg="husky_abb_manipulation" type="husky_abb_grab_object" output="screen"/>
 ```
 and a parameter call `move_before_grasp` set to `false`.
+Launch the file.
 
 
 **Modify the planner**
 
-Action, modify the planner.py script to obtain the desired functionality. 
+**Action**
+ modify the planner.py script to obtain the desired functionality. You will need to have `slam_navigation configured properly` 
 Optionally, set `move_before_grasp` to `true` and see what ot does.
 
-Launch the file.
 
 **Know issues**
 The physics in gazebo might break down after picking up one or two cubes
