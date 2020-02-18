@@ -12,11 +12,5 @@
   </include>
 
   <node name="spawn_april_cubes" pkg="mobility-plus-manipulation" type="spawn_april_cubes.py"/>
-
- <include file="$(find mobility-plus-manipulation)/launch/move_base_map_server_amcl.launch"> 
-  </include>
-
-   <include file="$(find husky_abb_moveit_config)/launch/moveit_planning_execution_gazebo.launch"> 
-  </include>
  
 </launch>
