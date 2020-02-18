@@ -52,7 +52,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
 
   <joint name="kinect_frame_joint" type="fixed">
-    <origin xyz="0.32 0 -0.05" rpy="0 0 0"/>
+    <origin xyz="0.39 -0.25 .042" rpy=".032 0 0.4051"/>
     <parent link="top_plate_link"/>
     <child link="camera_link"/>
   </joint>
