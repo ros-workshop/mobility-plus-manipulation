@@ -42,7 +42,7 @@ Will be using amcl this time:
 
 **Action**
 
-Create a launch file with the following and launch it
+Create a launch file to do the following:
 
 ```
 roslaunch mobility-plus-manipulation husky_abb.launch
