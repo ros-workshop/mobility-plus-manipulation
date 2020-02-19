@@ -89,7 +89,7 @@ bool GraspTag::serviceCallback(std_srvs::SetBool::Request &req, std_srvs::SetBoo
 	else
 	{
 		res.success = _srv_success;
-		res.message = "falied to exceute all motion";
+		res.message = "failed to exceute all motion";
 	}
 
 	return true;
@@ -163,7 +163,7 @@ public:
 		stop_husky();
 		ros::Time now = ros::Time::now();
 		ros::Time then = ros::Time::now();
-		while (cube_position.position.x > 0.85 && ((then - now).toSec() < 5))
+		while (cube_position.position.x > 0.85 && ((then - now).toSec() < 5))//while cube is more than .85 meters and loop has run for less than 5 seconds
 		{
 			cube_position = get_pose.getTarget();
 			then = ros::Time::now();
