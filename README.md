@@ -6,8 +6,8 @@ In this session, you'll make use of the navigation and manipulation modules you 
 this week to perform a task: Navigating to a set of waypoints where your robot would find
 an object of interest to collect.
 
-## Prerequisits
-In order to implement the mobile manipulation functionality. you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order. Don't worry if you didn't get a final outcome for manipulation.
+## Prerequisites
+In order to implement the mobile manipulation functionality, you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order. Don't worry if you didn't get a final outcome for manipulation.
 
 ## Task Description
 
@@ -74,11 +74,11 @@ Launch the file.
 
 **Action**
  modify the planner.py script to obtain the desired functionality. You will need to have `slam_navigation configured properly` 
-Optionally, set `move_before_grasp` to `true` and see what ot does.
+Optionally, set `move_before_grasp` to `true` and see what it does.
 
 
-**Know issues**
-The physics in gazebo might break down after picking up one or two cubes
+**Known issues**
+The physics in Gazebo might break down after picking up one or two cubes.
 
 ## Stretch Goal
 
