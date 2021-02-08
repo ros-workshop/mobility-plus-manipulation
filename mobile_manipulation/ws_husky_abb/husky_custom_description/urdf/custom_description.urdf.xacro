@@ -32,7 +32,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:include filename="$(find husky_abb_description)/urdf/abb_macro2.xacro"/>
   <xacro:include filename="$(find barrett_hand)/urdf/barrett.xacro"/>
-  <xacro:include filename="$(find husky_description)/urdf/accessories/kinect_camera.urdf.xacro"/>
+  <xacro:include filename="$(find husky_description)/urdf/accessories/intel_realsense.urdf.xacro"/>
 <!--END of mobility+manipulation includes-->
 
 
@@ -56,6 +56,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <parent link="top_plate_link"/>
     <child link="camera_link"/>
   </joint>
-  <xacro:kinect_camera prefix="camera" robot_namespace="$(arg robot_namespace)"/>
+  <xacro:intel_realsense_mount prefix="camera" topic="test" parent_link="base_link"/>
 
 </robot>
