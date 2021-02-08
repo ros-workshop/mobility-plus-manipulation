@@ -51,7 +51,7 @@ class subscriber {
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "transform_tag_location");
+    ros::init(argc, argv, "transform_tag_frame");
 	subscriber sub;
     geometry_msgs::Pose msg;
 	geometry_msgs::TransformStamped location_msg;
