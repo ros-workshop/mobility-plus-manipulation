@@ -364,12 +364,12 @@ What we want is to grasp the object with the tag
  
  ### Transform listener
  
- Have a look at the node `transform_tag_location.cpp` located in `husky_abb_manipulation`.
+ Have a look at the node `transform_tag_frame.cpp` located in `husky_abb_manipulation`.
  
  Run this node and see what it does. Modify it so we obtain a `geometry_msgs/Pose` out of it.
  
  **ACTION**
-Run `transform_tag_location`node and modify it to get a `geometry_msgs/Pose`.
+Run `transform_tag_frame`node and modify it to get a `geometry_msgs/Pose`.
  
  <details><summary>Click for Hint</summary>
 
@@ -407,7 +407,7 @@ roslaunch husky_abb_gazebo husky_abb.launch
 roslaunch husky_abb_moveit_config  moveit_planning_execution_gazebo.launch 
 roslaunch apriltags_gazebo apriltag_spawn.launch 
 roslaunch apriltags_gazebo tag_detection.launch 
-rosrun husky_abb_manipulation transform_tag_location 
+rosrun husky_abb_manipulation transform_tag_frame 
 ```
 
 </p> 

@@ -63,7 +63,7 @@ Create another launch file with the following
 ```
 
  <node name="planner" pkg="mobility-plus-manipulation" type="planner.py" output="screen" />
- <node name="transform_tag_location" pkg="husky_abb_manipulation" type="transform_tag_location"/>
+ <node name="transform_tag_frame" pkg="husky_abb_manipulation" type="transform_tag_frame"/>
  <node name="husky_abb_grab_object" pkg="husky_abb_manipulation" type="husky_abb_grab_object" output="screen"/>
 ```
 and a parameter call `move_before_grasp` set to `false`.

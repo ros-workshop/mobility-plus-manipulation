@@ -1,4 +1,4 @@
 <launch>
-<node name="transform_tag_location" pkg="husky_abb_manipulation" type="transform_tag_location"/>
+<node name="transform_tag_frame" pkg="husky_abb_manipulation" type="transform_tag_frame"/>
 <node name="husky_ur5_grab_object" pkg="husky_abb_manipulation" type="husky_abb_grab_object" output="screen"/>
 </launch>
