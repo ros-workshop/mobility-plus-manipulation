@@ -6,8 +6,8 @@
   <include file="$(find husky_abb_gazebo)/launch/husky_abb_spawn.launch"> </include>
   
   <include file="$(find apriltags_gazebo)/launch/continuous_detection.launch"> 
-    <arg name="camera_name" value="/camera"/>
-    <arg name="image_topic" value="/rgb/image_raw"/>
+    <arg name="camera_name" value="/realsense"/>
+    <arg name="image_topic" value="/color/image_raw"/>
     <arg name="camera_frame" value="camera_frame_optical"/>
   </include>
 
