@@ -8,7 +8,7 @@
   <include file="$(find apriltags_gazebo)/launch/continuous_detection.launch"> 
     <arg name="camera_name" value="/realsense"/>
     <arg name="image_topic" value="/color/image_raw"/>
-    <arg name="camera_frame" value="camera_frame_optical"/>
+    <arg name="camera_frame" value="camera_realsense_lens"/>
   </include>
 
   <node name="spawn_april_cubes" pkg="mobility-plus-manipulation" type="spawn_april_cubes.py"/>
