@@ -24,27 +24,27 @@ find_package(catkin REQUIRED COMPONENTS
 
 
 
-
-
-
-
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES husky_abb_manipulation
-#  CATKIN_DEPENDS moveit_msgs roscpp rospy std_msgs
-#  DEPENDS system_lib
+  INCLUDE_DIRS include
+  LIBRARIES husky_abb_manipulation
+  CATKIN_DEPENDS moveit_msgs roscpp rospy std_msgs
+  DEPENDS system_lib
 )
 
 
 include_directories(
-# include
+ include
   ${catkin_INCLUDE_DIRS}
 )
 
 
-add_executable(husky_abb_grab_object src/husky_abb_grab_object.cpp)
-target_link_libraries(husky_abb_grab_object ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
-install(TARGETS husky_abb_grab_object DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+add_library(husky_abb_manipulation src/husky_abb_grab_object.cpp)
+target_link_libraries(husky_abb_manipulation ${catkin_LIBRARIES})
+
+
+add_executable(husky_abb_grab_object_node src/husky_abb_grab_object_node.cpp)
+target_link_libraries(husky_abb_grab_object_node ${catkin_LIBRARIES} ${Boost_LIBRARIES} husky_abb_manipulation )
+install(TARGETS husky_abb_grab_object_node DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 
 add_executable(transform_tag_frame src/transform_tag_frame.cpp)
