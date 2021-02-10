@@ -68,7 +68,7 @@
   <build_export_depend>std_msgs</build_export_depend>
   <build_export_depend>tf</build_export_depend>
   <exec_depend>geometry_msgs</exec_depend>
-  <exec_depend>geometrygazebo_ros_link_attacher_msgs</exec_depend>
+  <exec_depend>gazebo_ros_link_attacher_msgs</exec_depend>
   <exec_depend>moveit_core</exec_depend>
   <exec_depend>moveit_msgs</exec_depend>
   <exec_depend>moveit_ros_planning_interface</exec_depend>
