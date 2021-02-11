@@ -91,6 +91,7 @@ class CommandAbbBarret
 	moveit::planning_interface::PlanningSceneInterface _planning_scene_interface; // planning interface
 	moveit::planning_interface::MoveGroupInterface arm;			 // planning group
 	moveit::planning_interface::MoveGroupInterface hand;		 // planning group
+	moveit::planning_interface::MoveItErrorCode success;
 
 
 };

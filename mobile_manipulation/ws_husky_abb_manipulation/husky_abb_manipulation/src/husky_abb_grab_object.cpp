@@ -36,6 +36,7 @@ void GraspTag::setPoseCallback(const geometry_msgs::Pose::ConstPtr &pose)
 
 	target_pose.position = pose->position;
 	target_pose.orientation = tf::createQuaternionMsgFromRollPitchYaw(1.57, 0, 0);
+	tag_flag = true;
 }
 
 bool GraspTag::serviceCallback(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res)
@@ -189,6 +190,8 @@ bool MoveHusky::drive_backwards()
 CommandAbbBarret::CommandAbbBarret() : arm("abb_arm"), hand("barrett_hand")
 {
 
+	ros::AsyncSpinner spinner(0);
+	spinner.start();
 	arm.setPlannerId("RRTConnectkConfigDefault");
 	//can be modified as desired
 	arm.setGoalTolerance(0.01);
@@ -209,8 +212,8 @@ bool CommandAbbBarret::arm_to_cube(geometry_msgs::Pose pose)
 	ROS_INFO("Tag location:\n x:%lf \n c:%lf \n z:%lf", pose.position.x, pose.position.y, pose.position.z);
 
 	pose.position.z += 0.25; //offset by .25 meters in the z axis
-	pose.position.x -= 0.05;
-	pose.position.y += 0.05;
+	// pose.position.x -= 0.05;
+	pose.position.y -= 0.05;
 
 	pose.orientation.w = 0.707;
 	pose.orientation.x = 0.0;
@@ -221,12 +224,17 @@ bool CommandAbbBarret::arm_to_cube(geometry_msgs::Pose pose)
 
 	arm.plan(_my_plan); // check if plan succeded
 
-	arm.move();
+	success = arm.move();
 
 	sleep(1.0);
-
-	pose.position.z -= 0.08; // move down towards the cube
+	if (success.val==1){
+	pose.position.z -= 0.07; // move down towards the cube
 	arm.setPoseTarget(pose, arm.getEndEffectorLink().c_str());
+	arm.plan(_my_plan); // check if plan succeded
+	success = arm.move();
+	}
+
+	return success.val;
 }
 
 bool CommandAbbBarret::close_hand()
@@ -277,6 +285,7 @@ bool CommandAbbBarret::arm_home()
 	arm.setNamedTarget("home"); // This is needed so that the robot arm will not block the LIDAR
 	arm.plan(_my_plan);
 	arm.move();
+	return 1;
 }
 
 /**********************************************************/
