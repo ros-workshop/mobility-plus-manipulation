@@ -7,7 +7,7 @@
   <xacro:include filename="$(find husky_abb_description)/urdf/abb_macro2.xacro"/>
   <xacro:include filename="$(find husky_description)/urdf/husky.urdf.xacro"/>
   <xacro:include filename="$(find barrett_hand)/urdf/barrett.xacro"/>
-  <xacro:include filename="$(find husky_abb_description)/urdf/kinect.xacro"/>
+  <!-- <xacro:include filename="$(find husky_abb_description)/urdf/kinect.xacro"/> -->
   <!-- Fix robot to Gazebo world
   
   <link name="world"/>-->

@@ -89,7 +89,7 @@ class MoveBaseSquare():
             self.move_base.send_goal(goal)
             
             # Allow 1 minute to get there
-            finished_within_time = self.move_base.wait_for_result(rospy.Duration(180)) 
+            finished_within_time = self.move_base.wait_for_result(rospy.Duration(50)) 
             
             succeeded = False
             # If we don't get there in time, abort the goal
