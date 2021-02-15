@@ -72,15 +72,13 @@ class MoveBaseSquare():
             
             # Set the time stamp to "now"
             goal.target_pose.header.stamp = rospy.Time.now()
-            
-            # Set the goal pose to the i-th waypoint
-            goal.target_pose.pose = waypoints[i]
-            
+                        
             # Start the robot moving toward the goal
             rospy.wait_for_service('grasp')
+            
             succeeded = self.move(goal)
             if succeeded :
-                self.grab()
+                pass
 
             i += 1
         
@@ -89,7 +87,7 @@ class MoveBaseSquare():
             self.move_base.send_goal(goal)
             
             # Allow 1 minute to get there
-            finished_within_time = self.move_base.wait_for_result(rospy.Duration(50)) 
+            finished_within_time = self.move_base.wait_for_result(rospy.Duration(180)) 
             
             succeeded = False
             # If we don't get there in time, abort the goal
@@ -106,7 +104,7 @@ class MoveBaseSquare():
 
     def grab(self):
         rospy.loginfo("running grab object service")
-        self.ServiceHandle()
+
         rospy.loginfo("Got cube!")
                     
     def init_markers(self):
@@ -157,11 +155,12 @@ if __name__ == '__main__':
         path = rospack.get_path('mobility-plus-manipulation')+'/husky_poses.csv'
         print("Searching for locations in: " + path)
         locations = []
-        with open(path, 'rb') as csvfile:
-            point_reader = csv.reader(csvfile, delimiter=',')
-            for row in point_reader:
-                print "Location loaded: " + ', '.join(row)
-                locations.append([float(row[0]), float(row[1]), float(row[2])])
+        
+        '''
+        ####################################
+        Read the CSV File with tag locations
+        ####################################
+        '''
 
         MoveBaseSquare(locations)
     except rospy.ROSInterruptException:

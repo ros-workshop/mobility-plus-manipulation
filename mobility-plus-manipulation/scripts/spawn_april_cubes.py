@@ -27,12 +27,12 @@ if __name__ == '__main__':
             cmds.append("rosrun gazebo_ros spawn_model -sdf " + 
                         "-file `rospack find apriltags_gazebo`/models/STAND/model.sdf "  +  
                         "-model stand_model_%d " % i +
-                        "-x %f -y %f -z 0.3 " % ( x, y ))
+                        "-x %f -y %f -z 0.2 " % ( x, y ))
  
             cmds.append("rosrun gazebo_ros spawn_model -urdf " + 
                         "-file `rospack find apriltags_gazebo`/models/new_apriltag/model.urdf "  +  
                         "-model apriltag_%d " % i +
-                        "-x %f -y %f -z 0.61 " % ( x, y ))
+                        "-x %f -y %f -z 0.51 " % ( x, y ))
 
         for cmd in cmds:
             print cmd      

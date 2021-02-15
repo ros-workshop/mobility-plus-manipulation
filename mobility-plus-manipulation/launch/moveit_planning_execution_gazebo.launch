@@ -16,6 +16,10 @@
   <include file="$(find husky_abb_moveit_config)/launch/move_group.launch">
     <arg name="publish_monitored_planning_scene" value="true" />
    </include>
+
+  <include file="$(find husky_abb_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+  </include>
   
   <!-- If database loading was enabled, start mongodb as well -->
   <include file="$(find husky_abb_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">
