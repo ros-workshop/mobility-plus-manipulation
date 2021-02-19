@@ -24,7 +24,7 @@ You'll be using the Husky with ABB arm mounted on it in order to achieve mobile 
 
 This session uses different simulated hardware from yesterday. Instead of the UR5, we will be using an ABB IRB120 arm mounted on a husky robot. 
 
-You will not need any of the manipulation functionilty as it is already implemented for you [here](././manipulation/ws_husky_abb_manipulation/husky_abb_manipulation/src/husky_abb_grab_object.cpp). You are more than welcome to change that functionality if you want. However, you will need the dependencies installed in for that repo.
+You will not need any of the manipulation functionilty as it is already implemented for you [here](././mobile_manipulation/ws_husky_abb_manipulation/husky_abb_manipulation/src/husky_abb_grab_object.cpp). You are more than welcome to change that functionality if you want. However, you will need the dependencies installed in for that repo.
 
 ### Spawn Additional Cubes
 
@@ -45,11 +45,11 @@ Will be using amcl this time:
 Create a launch file to do the following:
 
 ```
-roslaunch mobility-plus-manipulation husky_abb.launch
+mobility-plus-manipulation/husky_abb.launch
 
-roslaunch mobility-plus-manipulation move_base_map_server_amcl.launch
+mobility-plus-manipulation/move_base_map_server_amcl.launch
 
-roslaunch husky_abb_moveit_config moveit_planning_execution_gazebo.launch
+husky_abb_moveit_config/moveit_planning_execution_gazebo.launch
 
 ```
 You should see something like this:
@@ -63,10 +63,10 @@ Create another launch file with the following
 ```
 
  <node name="planner" pkg="mobility-plus-manipulation" type="planner.py" output="screen" />
- <node name="transform_tag_location" pkg="husky_abb_manipulation" type="transform_tag_location"/>
+ <node name="transform_tag_frame" pkg="husky_abb_manipulation" type="transform_tag_frame"/>
  <node name="husky_abb_grab_object" pkg="husky_abb_manipulation" type="husky_abb_grab_object" output="screen"/>
 ```
-and a parameter call `move_before_grasp` set to `false`.
+and a parameter call `move_before_grasp` set to `true`.
 Launch the file.
 
 

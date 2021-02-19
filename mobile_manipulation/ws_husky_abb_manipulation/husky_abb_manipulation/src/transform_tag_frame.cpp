@@ -10,11 +10,11 @@
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "transform_tag_location");
+    ros::init(argc, argv, "transform_tag_frame");
 	geometry_msgs::Pose msg;
 	geometry_msgs::TransformStamped tf_msg;
     ros::NodeHandle node;
-    ros::Rate rate(10);
+    ros::Rate rate(50);
 	ros::Publisher pub = node.advertise<geometry_msgs::Pose>("tag_pose", 1000);
     tf::TransformListener listener;
     tf::StampedTransform transform;
@@ -22,13 +22,14 @@ int main(int argc, char **argv)
     {
         try
         {
-            listener.waitForTransform("/base_link", "/tag_0", ros::Time(0), ros::Duration(9.0));
-            listener.lookupTransform("/base_link", "/tag_0", ros::Time(0), transform);
+            listener.waitForTransform("/base_link", "/tag_1", ros::Time(0), ros::Duration(1.0));
+            listener.lookupTransform("/base_link", "/tag_1", ros::Time(0), transform);
         }
         catch (tf::TransformException &ex)
         {
             ROS_ERROR("%s", ex.what());
-            ros::Duration(1.0).sleep();
+            ros::Duration(0.1).sleep();
+            transform = tf::StampedTransform();
             continue;
         }
         
