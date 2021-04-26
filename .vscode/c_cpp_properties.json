@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/scott/Auto_Barista/auto_barista_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/scott/Auto_Barista/auto_barista_ws/src/auto_barista_gazebo/include/**",
+        "/home/scott/Auto_Barista/auto_barista_ws/src/universal_robots_ros_driver/controller_stopper/include/**",
+        "/home/scott/Auto_Barista/auto_barista_ws/src/robotiq_2finger_grippers/robotiq_2f_gripper_control/include/**",
+        "/home/scott/Auto_Barista/auto_barista_ws/src/ur3_barista/include/**",
+        "/home/scott/Auto_Barista/auto_barista_ws/src/universal_robots_ros_driver/ur_calibration/include/**",
+        "/home/scott/Auto_Barista/auto_barista_ws/src/universal_robots_ros_driver/ur_controllers/include/**",
+        "/home/scott/Auto_Barista/auto_barista_ws/src/fmauch_universal_robot/ur_kinematics/include/**",
+        "/home/scott/Auto_Barista/auto_barista_ws/src/universal_robots_ros_driver/ur_robot_driver/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
