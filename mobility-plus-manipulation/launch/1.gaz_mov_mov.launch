@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <include file="$(find mobility-plus-manipulation)/launch/husky_abb.launch" />
+  <include file="$(find mobility-plus-manipulation)/launch/move_base_map_server_amcl.launch" />
+  <include file="$(find husky_abb_moveit_config)/launch/moveit_planning_execution_gazebo.launch" />
+</launch>
