@@ -19,11 +19,12 @@ class MoveBaseSquare():
         rospy.init_node('nav_test', anonymous=False)
         
         rospy.on_shutdown(self.shutdown)
+
+        #initialize Service Handle
+        self.service_handle=rospy.ServiceProxy('grasp', SetBool)
+
         # Create a list to hold the waypoint poses
         waypoints = list()
-        
-        q_angle = quaternion_from_euler(0, 0, 0, axes='sxyz')
-        q = Quaternion(*quaternion_from_euler(0, 0, 0, axes='sxyz'))
         
         # Append each of the four waypoints to the list.  Each waypoint
         # is a pose consisting of a position and orientation in the map frame.
@@ -75,10 +76,12 @@ class MoveBaseSquare():
                         
             # Start the robot moving toward the goal
             rospy.wait_for_service('grasp')
-            
+            goal.target_pose.pose = waypoints[i]
             succeeded = self.move(goal)
+
+            # If it gets there, grab the object
             if succeeded :
-                pass
+                self.grab()
 
             i += 1
         
@@ -104,8 +107,11 @@ class MoveBaseSquare():
 
     def grab(self):
         rospy.loginfo("running grab object service")
-
-        rospy.loginfo("Got cube!")
+        resp = self.service_handle.call(True)
+        if resp.success is True:
+            rospy.loginfo("Got cube!")
+        else:
+            rospy.logerr("Yikes, missed it!")
                     
     def init_markers(self):
         # Set up our waypoint markers
@@ -145,9 +151,6 @@ class MoveBaseSquare():
         self.cmd_vel_pub.publish(Twist())
         rospy.sleep(1)
 
-    #initialize Service Handle
-    ServiceHandle=rospy.ServiceProxy('grasp', SetBool)
-
 if __name__ == '__main__':
     try:
         print("waiting for husky_abb_grab_object.cpp to run")
@@ -156,11 +159,10 @@ if __name__ == '__main__':
         print("Searching for locations in: " + path)
         locations = []
         
-        '''
-        ####################################
-        Read the CSV File with tag locations
-        ####################################
-        '''
+        with open(path, 'r') as locs_fptr:
+            rdr = csv.reader(locs_fptr, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
+            for row in rdr:
+                locations.append(row)
 
         MoveBaseSquare(locations)
     except rospy.ROSInterruptException:
