@@ -2,10 +2,9 @@
 
 int main(int argc, char **argv)
 {
-
 	ros::init(argc, argv, "object_grasp_server");
 	ros::NodeHandle n;
-	ros::Rate loop_rate(50);
+	ros::Rate loop_rate(1);
 	ros::Duration grasp_timeout(10);
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
@@ -25,7 +24,6 @@ int main(int argc, char **argv)
 
 	while (ros::ok())
 	{
-
 		grasp_tag_obj.DontExecuteGrasp();
 
 		while (!grasp_tag_obj.ExecuteGrasp() && !ros::isShuttingDown())
@@ -34,10 +32,16 @@ int main(int argc, char **argv)
 			ROS_INFO_THROTTLE(1, "waiting for service call");
 			loop_rate.sleep();
 		}
+		if (ros::isShuttingDown())
+		{
+			break;
+		}
 		ROS_WARN("Grasp service has been called");
 		sleep(1.0); //wait before move forward
 		if (move_before_grasp)
+		{
 			move_husky_obj.drive_forwards();
+		}
 		grasp_tag_obj.SetTagFlag(false);
 
 		ros::topic::waitForMessage<geometry_msgs::Pose>("/tag_pose", grasp_timeout);
@@ -60,6 +64,6 @@ int main(int argc, char **argv)
 		sleep(1.0);
 		move_husky_obj.drive_backwards();
 		grasp_tag_obj.setSuccess(true);
-		ros::spinOnce();
 	}
+	return 0;
 }
