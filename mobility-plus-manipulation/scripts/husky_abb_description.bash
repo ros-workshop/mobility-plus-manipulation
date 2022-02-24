@@ -1,0 +1,1 @@
+source $(catkin_find husky_custom_description env-hooks/60.husky_custom_description.sh)

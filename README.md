@@ -6,8 +6,10 @@ In this session, you'll make use of the navigation and manipulation modules you 
 this week to perform a task: Navigating to a set of waypoints where your robot would find
 an object of interest to collect.
 
-## Prerequisits
-In order to implement the mobile manipulation functionality. you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order. Don't worry if you didn't get a final outcome for manipulation.
+## Prerequisites
+In order to implement the mobile manipulation functionality, you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order.
+Don't worry if you didn't get a final outcome for manipulation.
+You will also need the [abb](https://github.com/ros_industrial/abb) repository downloaded into your workspace.
 
 ## Task Description
 
@@ -42,7 +44,7 @@ Will be using amcl this time:
 
 **Action**
 
-Create a launch file with the following and launch it
+Create a launch file to do the following:
 
 ```
 mobility-plus-manipulation/husky_abb.launch
@@ -52,6 +54,17 @@ mobility-plus-manipulation/move_base_map_server_amcl.launch
 husky_abb_moveit_config/moveit_planning_execution_gazebo.launch
 
 ```
+
+⚠️ **Note:** You will need to run the following command **manually** before you run the launch file `mobility-plus-manipulation husky_abb.launch`;
+
+```
+roscd mobility-plus-manipulation/scripts
+source husky_abb_description.bash
+```
+
+This command makes sure the abb gets included with the robot description in the URDF.
+Do not dedicate any brain power to determining why this file is needed and what it does.
+
 You should see something like this:
 
 ![Alt Text](./resources/images/husky_tag.png)
@@ -64,7 +77,7 @@ Create another launch file with the following
 
  <node name="planner" pkg="mobility-plus-manipulation" type="planner.py" output="screen" />
  <node name="transform_tag_frame" pkg="husky_abb_manipulation" type="transform_tag_frame"/>
- <node name="husky_abb_grab_object" pkg="husky_abb_manipulation" type="husky_abb_grab_object" output="screen"/>
+ <node name="husky_abb_grab_object_node" pkg="husky_abb_manipulation" type="husky_abb_grab_object_node" output="screen"/>
 ```
 and a parameter call `move_before_grasp` set to `true`.
 Launch the file.
@@ -74,11 +87,11 @@ Launch the file.
 
 **Action**
  modify the planner.py script to obtain the desired functionality. You will need to have `slam_navigation configured properly` 
-Optionally, set `move_before_grasp` to `true` and see what ot does.
+Optionally, set `move_before_grasp` to `true` and see what it does.
 
 
-**Know issues**
-The physics in gazebo might break down after picking up one or two cubes
+**Known issues**
+The physics in Gazebo might break down after picking up one or two cubes.
 
 ## Stretch Goal
 

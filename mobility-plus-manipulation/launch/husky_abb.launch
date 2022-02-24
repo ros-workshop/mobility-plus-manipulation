@@ -6,17 +6,11 @@
   <include file="$(find husky_abb_gazebo)/launch/husky_abb_spawn.launch"> </include>
   
   <include file="$(find apriltags_gazebo)/launch/continuous_detection.launch"> 
-    <arg name="camera_name" value="/realsense"/>
-    <arg name="image_topic" value="/color/image_raw"/>
-    <arg name="camera_frame" value="camera_realsense_gazebo"/>
+    <arg name="camera_name" value="/camera"/>
+    <arg name="image_topic" value="/rgb/image_raw"/>
+    <arg name="camera_frame" value="camera_frame_optical"/>
   </include>
 
   <node name="spawn_april_cubes" pkg="mobility-plus-manipulation" type="spawn_april_cubes.py"/>
-
- <include file="$(find mobility-plus-manipulation)/launch/move_base_map_server_amcl.launch"> 
-  </include>
-
-   <include file="$(find husky_abb_moveit_config)/launch/moveit_planning_execution_gazebo.launch"> 
-  </include>
  
 </launch>
