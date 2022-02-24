@@ -7,7 +7,9 @@ this week to perform a task: Navigating to a set of waypoints where your robot w
 an object of interest to collect.
 
 ## Prerequisites
-In order to implement the mobile manipulation functionality, you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order. Don't worry if you didn't get a final outcome for manipulation.
+In order to implement the mobile manipulation functionality, you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order.
+Don't worry if you didn't get a final outcome for manipulation.
+You will also need the [abb](https://github.com/ros_industrial/abb) repository downloaded into your workspace.
 
 ## Task Description
 
