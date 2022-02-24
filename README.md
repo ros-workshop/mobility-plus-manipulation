@@ -52,6 +52,17 @@ mobility-plus-manipulation/move_base_map_server_amcl.launch
 husky_abb_moveit_config/moveit_planning_execution_gazebo.launch
 
 ```
+
+⚠️ **Note:** You will need to run the following command **manually** before you run the launch file `mobility-plus-manipulation husky_abb.launch`;
+
+```
+roscd mobility-plus-manipulation/scripts
+source husky_abb_description.bash
+```
+
+This command makes sure the abb gets included with the robot description in the URDF.
+Do not dedicate any brain power to determining why this file is needed and what it does.
+
 You should see something like this:
 
 ![Alt Text](./resources/images/husky_tag.png)
