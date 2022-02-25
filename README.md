@@ -7,7 +7,9 @@ this week to perform a task: Navigating to a set of waypoints where your robot w
 an object of interest to collect.
 
 ## Prerequisites
-In order to implement the mobile manipulation functionality, you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order. Don't worry if you didn't get a final outcome for manipulation.
+In order to implement the mobile manipulation functionality, you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order.
+Don't worry if you didn't get a final outcome for manipulation.
+You will also need the [abb](https://github.com/ros_industrial/abb) repository downloaded into your workspace.
 
 ## Task Description
 
@@ -52,6 +54,17 @@ mobility-plus-manipulation/move_base_map_server_amcl.launch
 husky_abb_moveit_config/moveit_planning_execution_gazebo.launch
 
 ```
+
+⚠️ **Note:** You will need to run the following command **manually** before you run the launch file `mobility-plus-manipulation husky_abb.launch`;
+
+```
+roscd mobility-plus-manipulation/scripts
+source husky_abb_description.bash
+```
+
+This command makes sure the abb gets included with the robot description in the URDF.
+Do not dedicate any brain power to determining why this file is needed and what it does.
+
 You should see something like this:
 
 ![Alt Text](./resources/images/husky_tag.png)

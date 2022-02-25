@@ -1,15 +1,5 @@
 #include <husky_abb_manipulation/husky_abb_grab_object.h>
 
-void SigintHandler(int sig)
-{
-	// Do some custom action.
-	// For example, publish a stop message to some other nodes.
-
-	// All the default sigint handler does is call shutdown()
-	ROS_INFO("SHUTING DOWN()");
-	ros::shutdown();
-}
-
 /* GraspTag Class */
 
 GraspTag::GraspTag()
@@ -17,9 +7,8 @@ GraspTag::GraspTag()
 
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
-	signal(SIGINT, SigintHandler);
 	pose_sub = n.subscribe("/tag_pose", 1000, &GraspTag::setPoseCallback, this);
-	_service = n.advertiseService("grasp", &GraspTag::serviceCallback,this); // creating the server called grasp
+	_service = n.advertiseService("grasp", &GraspTag::serviceCallback, this); // creating the server called grasp
 	ROS_INFO("READY");
 	attach_tag_client = n.serviceClient<gazebo_ros_link_attacher::Attach>("/link_attacher_node/attach");
 	detach_tag_client = n.serviceClient<gazebo_ros_link_attacher::Attach>("/link_attacher_node/detach");
@@ -50,7 +39,12 @@ bool GraspTag::serviceCallback(std_srvs::SetBool::Request &req, std_srvs::SetBoo
 	{
 		sleep(0.1);
 	}
-	if (_srv_success)
+	if (ros::isShuttingDown())
+	{
+		res.success = false;
+		res.message = "ROS has been shutdown before the grasp could succeed";
+	}
+	else if (_srv_success)
 	{
 		res.success = _srv_success;
 		res.message = "all motion succeeded";
