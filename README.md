@@ -1,15 +1,18 @@
-# mobility-plus-manipulation
+# Mobility Plus Manipulation
+
 ![Alt Text](./resources/images/grabcube.gif)
 ## Goal
 
-In this session, you'll make use of the navigation and manipulation modules you worked on in 
-this week to perform a task: Navigating to a set of waypoints where your robot would find
-an object of interest to collect.
+In this session you'll use the ROS packages and algorithms you've learned this week (SLAM, navigation and manipulation), to program a simulated robot to perform a task:  
+Navigating between a set of waypoints and collecting objects of interest.
 
 ## Prerequisites
 In order to implement the mobile manipulation functionality, you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order.
 Don't worry if you didn't get a final outcome for manipulation.
-You will also need the [abb](https://github.com/ros_industrial/abb) repository downloaded into your workspace.
+You will also need the [ABB](https://github.com/ros-industrial/abb) repository downloaded into your workspace.
+After you `git clone` the repository, make sure you switch to the `kinetic-devel` branch.
+It has been changed to allow for building on Noetic.
+
 
 ## Task Description
 
