@@ -1,17 +1,22 @@
 # Mobility Plus Manipulation
 
-![Alt Text](./resources/images/grabcube.gif)
-## Goal
+## Overview
 
-In this session you'll use the ROS packages and algorithms you've learned this week (SLAM, navigation and manipulation), to program a simulated robot to perform a task:  
-Navigating between a set of waypoints and collecting objects of interest.
+Over the last week you've learned how to use ROS to [integrate sensors][01-sensor-integration], perform [localisation and build maps][02-slam-navigation] while [navigating][02-slam-navigation] in a Gazebo simulation and [perceiving][03-perception] and [manipulating][04-manipulation] objects with April Tags. 
+In this session you'll integrate these packages and algorithms to create a simulated robot that can perform _mobile manipulation_.
+
+In robotics research, _mobile manipulation_ is a broad set of problems where a mobile robot performs synergistic navigation and interaction with the environment. Here we'll work on a restricted problem— mobility _plus_ manipulation— where the robot alternates between navigation and manipulation modes (i.e. it parks before moving its arm).
+
+**Goal:** Navigate between a set of waypoints and collect objects of interest:
+
+![Alt Text](./resources/images/grabcube.gif)
 
 ## Prerequisites
+
 In order to implement the mobile manipulation functionality, you will need the [manipulation](https://github.com/ros-workshop/manipulation) and [slam_navigation](https://github.com/ros-workshop/slam-navigation) repositories in working order.
 Don't worry if you didn't get a final outcome for manipulation.
 You will also need the [ABB](https://github.com/ros-industrial/abb) repository downloaded into your workspace.
-After you `git clone` the repository, make sure you switch to the `kinetic-devel` branch.
-It has been changed to allow for building on Noetic.
+After you `git clone` the repository, make sure you switch to the `kinetic-devel` branch, which also builds on Noetic.
 
 
 ## Task Description
@@ -19,25 +24,23 @@ It has been changed to allow for building on Noetic.
 You'll be using the Husky with ABB arm mounted on it in order to achieve mobile manipulation. You have two tasks:
 
 + Create Launch files for running everything required.
-+ modify this [script](./mobility-plus-manipulation/scripts/planner.py) to execute the mobile manipulaiton task.
-
-
++ Modify this [script](./mobility-plus-manipulation/scripts/planner.py) to execute the mobile manipulation task.
 
 ## How this all comes together
 
 ### Manipulation
 
-This session uses different simulated hardware from yesterday. Instead of the UR5, we will be using an ABB IRB120 arm mounted on a husky robot. 
+This session uses different simulated hardware from yesterday. Instead of the UR5, we will be using an ABB IRB120 arm mounted on a Husky robot. 
 
-You will not need any of the manipulation functionilty as it is already implemented for you [here](././mobile_manipulation/ws_husky_abb_manipulation/husky_abb_manipulation/src/husky_abb_grab_object.cpp). You are more than welcome to change that functionality if you want. However, you will need the dependencies installed in for that repo.
+You will not need any of the manipulation functionality as it is already implemented [here](./mobile_manipulation/ws_husky_abb_manipulation/husky_abb_manipulation/src/husky_abb_grab_object.cpp). You are more than welcome to change that functionality if you want. However, you will need the dependencies installed in for that repo.
 
 ### Spawn Additional Cubes
 
 Find the file that will spawn multiple stands and apriltags
 
-### Initialise gmapping and move_base
+### Initialise `gmapping` and `move_base`
 
-This is following the week 2 day 2 tutorial https://github.com/ros-workshop/slam-navigation.
+This is following the Day #2 SLAM tutorial [here](https://github.com/ros-workshop/slam-navigation).
 
 Will be using amcl this time:
 
@@ -101,12 +104,17 @@ The physics in Gazebo might break down after picking up one or two cubes.
 ### Description
 
 Robotic tasks often require complex state machines where robots observe and execute actions depending on its current
-state (think [Markovian assumption](https://en.wikipedia.org/wiki/Markov_property) :)), if not for all states. ROS
+state (think [Markovian assumption](https://en.wikipedia.org/wiki/Markov_property)), if not for all states. ROS
 provides a state-machine system for this very purpose called [Smach](http://wiki.ros.org/smach), which you can 
 use for handling state-machines in your system. 
 
 ### Goal
 
-Do go through Smach tutorials and see how you can use it to perform the sequence of mobility and manipulation tasks
+Work through the Smach tutorials and see how you can use it to perform the sequence of mobility and manipulation tasks
 above.  
 
+[01-sensor-integration]: https://github.com/ros-workshop/sensor-integration
+[02-slam-navigation]: https://github.com/ros-workshop/slam-navigation
+[03-perception]: https://github.com/ros-workshop/perception
+[04-manipulation]: https://github.com/ros-workshop/manipulation
+[05-mobility-plus-manipulation]: https://github.com/ros-workshop/mobility-plus-manipulation
