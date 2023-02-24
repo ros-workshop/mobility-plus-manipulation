@@ -4,7 +4,7 @@ int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "object_grasp_server");
 	ros::NodeHandle n;
-	ros::Rate loop_rate(1);
+	ros::Rate loop_rate(50);
 	ros::Duration grasp_timeout(10);
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
@@ -64,6 +64,7 @@ int main(int argc, char **argv)
 		sleep(1.0);
 		move_husky_obj.drive_backwards();
 		grasp_tag_obj.setSuccess(true);
+		ros::spinOnce();
 	}
 	return 0;
 }
