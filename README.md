@@ -38,7 +38,7 @@ You will not need any of the manipulation functionality as it is already impleme
 
 Find the file that will spawn multiple stands and apriltags
 
-### Initialise `gmapping` and `move_base`
+### Initialise `AMCL` and `move_base`
 
 This is following the Day #2 SLAM tutorial [here](https://github.com/ros-workshop/slam-navigation).
 
